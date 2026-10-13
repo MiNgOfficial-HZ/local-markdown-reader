@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiNg Markdown Reader</title>
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="./wenkai-markdown.css">
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">M</span><div><strong>MiNg</strong><small>MARKDOWN READER</small></div></div>
+      <div class="side-actions">
+        <button class="primary-btn" id="openFile">＋ 打开 Markdown</button>
+        <button class="ghost-btn" id="openFolder">打开文件夹</button>
+      </div>
+      <div class="side-label">最近打开</div>
+      <nav class="document-list" id="documentList" aria-label="文档列表"></nav>
+      <div class="sidebar-foot"><span id="fileCount">0 篇文档</span><button class="icon-btn" id="themeToggle" title="切换明暗主题">☾</button></div>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="topbar">
+        <div class="crumb"><span>LOCAL LIBRARY</span><i>/</i><b id="currentFile">未选择文档</b></div>
+        <div class="top-actions">
+          <button class="icon-btn" id="fontDown" title="缩小字体">A−</button>
+          <button class="icon-btn" id="fontUp" title="放大字体">A＋</button>
+          <button class="icon-btn" id="printDoc" title="打印或导出 PDF">⇩</button>
+          <button class="icon-btn" id="revealFile" title="在文件夹中显示">⌕</button>
+        </div>
+      </header>
+
+      <section class="welcome" id="welcome">
+        <div class="welcome-eyebrow">OFFLINE READING SPACE</div>
+        <h1>把 Markdown 读得<br><em>舒服一点。</em></h1>
+        <p>打开本地 Markdown 文档，使用和网站一致的文楷与 Outfit 字体、目录和阅读排版。</p>
+        <button class="primary-btn large" id="welcomeOpen">选择一篇文档 →</button>
+        <div class="drop-hint">也可以把 <code>.md</code> 文件直接拖到这里</div>
+      </section>
+
+      <section class="reader-wrap" id="readerWrap" hidden>
+        <div class="reader-head">
+          <div class="reader-meta" id="readerMeta">MARKDOWN · LOCAL</div>
+          <h1 class="reader-title" id="readerTitle"></h1>
+          <div class="reader-subline"><span id="readerStats"></span><button class="path-btn" id="pathButton"></button></div>
+        </div>
+        <div class="reader-layout">
+          <aside class="toc" id="toc" hidden><div class="toc-title">目录索引 <small>CONTENTS</small></div><nav id="tocNav"></nav></aside>
+          <article class="md-body" id="readerBody"></article>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./vendor/katex/katex.min.js"></script>
+  <script src="./vendor/ming-markdown-renderer.js"></script>
+  <script src="./renderer.js"></script>
+</body>
+</html>

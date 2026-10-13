@@ -1,0 +1,38 @@
+{
+  "name": "ming-markdown-reader",
+  "version": "0.1.0",
+  "description": "Offline Markdown reader using the MiNgHZ website reading typography.",
+  "main": "main.cjs",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check main.cjs && node --check preload.cjs && node --check renderer.js",
+    "dist": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.minghz.markdownreader",
+    "productName": "MiNg Markdown Reader",
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "!dist/**/*"
+    ],
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "allowScripts": {
+    "electron@38.8.6": true,
+    "electron-winstaller@5.4.0": true
+  }
+}
