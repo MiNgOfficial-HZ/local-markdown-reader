@@ -31,6 +31,30 @@
     localStorage.setItem('ming-reader-font-scale', state.fontScale.toFixed(2));
   }
 
+  function paintFullscreenButton(on) {
+    const button = $('#fullscreenToggle');
+    if (!button) return;
+    button.textContent = '⛶';
+    button.setAttribute('aria-pressed', String(on));
+    button.title = on ? '退出全屏阅读（Esc）' : '全屏阅读（F11）';
+    button.setAttribute('aria-label', button.title);
+  }
+
+  async function setFullscreenMode(on, syncNative = true) {
+    const enabled = Boolean(on && state.current);
+    document.body.classList.toggle('reader-fullscreen', enabled);
+    paintFullscreenButton(enabled);
+    if (syncNative && window.reader.setFullscreen) {
+      try { await window.reader.setFullscreen(enabled); } catch (error) { /* 布局全屏仍可用 */ }
+    }
+    requestAnimationFrame(updateProgress);
+  }
+
+  function toggleFullscreen() {
+    if (!state.current) return;
+    setFullscreenMode(!document.body.classList.contains('reader-fullscreen'));
+  }
+
   function formatBytes(bytes) {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -103,6 +127,7 @@
     $('#pathButton').textContent = doc.path;
     $('#pathButton').title = doc.path;
     $('#revealFile').disabled = false;
+    $('#fullscreenToggle').disabled = false;
     const content = await normalizeLocalImages(doc.content, doc.dir);
     $('#readerBody').innerHTML = window.MingLongMarkdownRenderer.render(content);
     window.MingLongMarkdownRenderer.hydrateMath($('#readerBody'), window.katex);
@@ -140,6 +165,7 @@
   });
   $('#fontDown').addEventListener('click', () => setFontScale(state.fontScale - 0.04));
   $('#fontUp').addEventListener('click', () => setFontScale(state.fontScale + 0.04));
+  $('#fullscreenToggle').addEventListener('click', toggleFullscreen);
   $('#printDoc').addEventListener('click', () => state.current && window.print());
   $('#revealFile').addEventListener('click', () => state.current && window.reader.reveal(state.current.path));
   $('#pathButton').addEventListener('click', () => state.current && window.reader.reveal(state.current.path));
@@ -156,12 +182,20 @@
   });
   window.addEventListener('keydown', (event) => {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'o') { event.preventDefault(); openFiles(); }
-    if (event.key === 'Escape') document.body.classList.remove('dragging');
+    if (event.key === 'F11') { event.preventDefault(); toggleFullscreen(); }
+    if (event.key === 'Escape') {
+      document.body.classList.remove('dragging');
+      if (document.body.classList.contains('reader-fullscreen')) { event.preventDefault(); setFullscreenMode(false); }
+    }
   });
+
+  window.reader.onFullscreenChange((enabled) => setFullscreenMode(enabled, false));
 
   applyTheme();
   setFontScale(state.fontScale);
   $('#revealFile').disabled = true;
+  $('#fullscreenToggle').disabled = true;
+  paintFullscreenButton(false);
   renderList();
   window.reader.onInitialDocuments(addDocuments);
 })();

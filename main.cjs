@@ -78,6 +78,9 @@ function createWindow() {
     }
   });
 
+  mainWindow.on('enter-full-screen', () => mainWindow.webContents.send('window:fullscreen', true));
+  mainWindow.on('leave-full-screen', () => mainWindow.webContents.send('window:fullscreen', false));
+
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (/^https?:/i.test(url)) shell.openExternal(url);
     return { action: 'deny' };
@@ -117,6 +120,12 @@ ipcMain.handle('documents:openFolder', async () => {
 
 ipcMain.handle('documents:reveal', (_event, filePath) => {
   if (typeof filePath === 'string') shell.showItemInFolder(filePath);
+});
+
+ipcMain.handle('window:setFullscreen', (_event, enabled) => {
+  if (!mainWindow || mainWindow.isDestroyed()) return false;
+  mainWindow.setFullScreen(Boolean(enabled));
+  return mainWindow.isFullScreen();
 });
 
 ipcMain.handle('documents:toFileUrl', (_event, baseDir, target) => {

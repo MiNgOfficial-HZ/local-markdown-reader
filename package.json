@@ -1,6 +1,6 @@
 {
   "name": "ming-markdown-reader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Offline Markdown reader using the MiNgHZ website reading typography.",
   "main": "main.cjs",
   "private": true,

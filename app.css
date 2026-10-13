@@ -113,6 +113,21 @@ button { color: inherit; font: inherit; }
 .md-body th, .md-body td { padding: 8px 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
 .md-body th { background: var(--bg-2); font-weight: 700; }
 .math-display { display: block; overflow-x: auto; padding: 4px 0; margin: 1em 0; }
+.fullscreen-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+body.reader-fullscreen .shell { display: block; }
+body.reader-fullscreen .sidebar { display: none; }
+body.reader-fullscreen .topbar { padding-inline: max(20px, calc((100vw - 1180px) / 2)); }
+body.reader-fullscreen .reader-wrap {
+  max-width: none; min-height: calc(100vh - 67px);
+  padding: 34px max(20px, calc((100vw - 1180px) / 2)) 72px;
+}
+body.reader-fullscreen .reader-head { max-width: 1040px; margin-inline: auto; }
+body.reader-fullscreen .reader-layout {
+  grid-template-columns: minmax(188px, 220px) minmax(0, 820px);
+  justify-content: center; gap: 42px;
+}
+body.reader-fullscreen .toc { top: 96px; max-height: calc(100vh - 150px); }
+body.reader-fullscreen .md-body { font-size: calc(1rem * var(--reader-scale)); }
 .toast { position: fixed; right: 26px; bottom: 24px; z-index: 20; max-width: 380px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); color: var(--ink); opacity: 0; transform: translateY(8px); pointer-events: none; transition: .2s ease; }
 .toast.show { opacity: 1; transform: none; }
 body.dragging::after { position: fixed; inset: 14px; z-index: 30; display: grid; place-items: center; border: 2px dashed var(--accent); border-radius: 18px; background: color-mix(in srgb, var(--surface) 88%, transparent); color: var(--accent); content: '松开以打开 Markdown 文件'; font-size: 20px; pointer-events: none; }
