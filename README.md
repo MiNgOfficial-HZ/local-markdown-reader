@@ -6,8 +6,8 @@
 
 在 [GitHub Releases](https://github.com/MiNgOfficial-HZ/local-markdown-reader/releases/latest) 下载 Windows x64 版本：
 
-- 安装版：`MiNg Markdown Reader Setup 0.1.0.exe`，运行后按提示安装，可创建桌面和开始菜单快捷方式。
-- 便携版：`MiNg Markdown Reader 0.1.0.exe`，双击即可运行。
+- [下载 Windows 安装版](https://github.com/MiNgOfficial-HZ/local-markdown-reader/releases/download/v0.1.0/MiNg.Markdown.Reader.Setup.0.1.0.exe)，运行后按提示安装，可创建桌面和开始菜单快捷方式。
+- [下载 Windows 便携版](https://github.com/MiNgOfficial-HZ/local-markdown-reader/releases/download/v0.1.0/MiNg.Markdown.Reader.0.1.0.exe)，双击即可运行。
 
 两种版本都已集成运行环境、Outfit、霞鹜文楷和 KaTeX，无需安装 Node.js 或额外下载字体。
 
